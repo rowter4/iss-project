@@ -1,0 +1,45 @@
+name: Compile, test, deploy
+on: ["push"]  # will trigger when we do a push on github
+jobs:
+  step1:
+    runs-on: ubuntu-latest #this is an empty ubuntu machine
+    steps:
+      # need to check out the repository since this workflow might not have the access to our repo
+      # search at github marketplace for the actions on what we want to do 
+      - name: Checkout my own repo
+        uses: actions/checkout@v3 #this is from actions/checkout branch on github
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17' # parameters are taking in string only
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v4.3 
+        with:
+          maven-version: '3.8.4'
+      - name: Run the test for the app
+        run: mvn clean verify
+      - name: Generate coverage badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with: 
+          generate-coverage-badge: true
+      - name: Upload coverage on DigitalOcean
+        uses: BetaHuhn/do-spaces-action@v2
+        with:
+          access_key: ${{ secrets.access_key }}
+          secret_key: ${{ secrets.secret_key }}
+          space_name: rowtering
+          space_region: sgp1
+          source: .github/badges/jacoco.svg
+          out_dir: coverage/${{ github.event.repository.name }}
+          permission: public-read
+      - name: Upload coverage report
+        uses: BetaHuhn/do-spaces-action@v2
+        with:
+          access_key: ${{ secrets.access_key }}
+          secret_key: ${{ secrets.secret_key }}
+          space_name: rowtering
+          space_region: sgp1
+          source: target/site/jacoco
+          out_dir: coverage/${{ github.event.repository.name }}/report
+        
