@@ -11,3 +11,33 @@ create table users (
     password varchar(256) not null,
     primary key(username)
 );
+
+
+create table po (
+    ord_id int auto_increment not null,
+    username varchar(256) not null,
+    order_date date default (current_date),
+    primary key(ord_id),
+    
+    constraint fk_username
+		foreign key(username)
+        references users(username)
+);
+
+
+
+create table individual_item (
+    item_id int not null auto_increment,
+    amount float(5,2),
+	price float(10,2),
+    
+    -- foreign keys
+    ord_id int,
+
+    -- keys
+    primary key(item_id),
+
+    constraint fk_ord_id 
+        foreign key(ord_id) 
+        references po(ord_id)
+);
