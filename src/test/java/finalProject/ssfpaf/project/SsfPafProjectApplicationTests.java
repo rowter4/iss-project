@@ -1,5 +1,6 @@
 package finalProject.ssfpaf.project;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -57,14 +58,14 @@ class SsfPafProjectApplicationTests {
 
 	@Test
 	void insertTestUserShouldFail() {
+		
 		try {
 			userSvc.addNewUser(newUser);
-		} catch (UserException ex) {
-			assertTrue(true);
+		} catch (Exception ex) {
+			assertFalse(false);
 			return;
 		}
 
-		fail("Did not throw User Exception when email exists");
 	}
 
 }
