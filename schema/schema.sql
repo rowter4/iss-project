@@ -14,7 +14,7 @@ create table users (
 
 
 create table po (
-    ord_id int auto_increment not null,
+    ord_id char(8) not null,
     username varchar(256) not null,
     order_date date default (current_date),
     primary key(ord_id),
@@ -32,7 +32,7 @@ create table individual_item (
 	price float(10,2),
     
     -- foreign keys
-    ord_id int,
+    ord_id char(8),
 
     -- keys
     primary key(item_id),

@@ -1,8 +1,11 @@
 package finalProject.ssfpaf.project.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 // import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
@@ -14,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import finalProject.ssfpaf.project.models.IndividualItem;
 import finalProject.ssfpaf.project.models.Metal;
 import finalProject.ssfpaf.project.models.Order;
 import finalProject.ssfpaf.project.models.User;
 import finalProject.ssfpaf.project.service.MetalService;
+import finalProject.ssfpaf.project.service.OrderService;
 import finalProject.ssfpaf.project.service.UserService;
 
 import static finalProject.ssfpaf.project.models.ConversionUtils.*;
@@ -33,8 +38,12 @@ public class AuthenticateController {
     @Autowired
     public MetalService metalSvc;
 
+    @Autowired
+    public OrderService orderSvc;
+
     Integer goldPrice;
     Integer silverPrice;
+    User userDetails;
 
     @PostMapping("/authenticate")
     public ModelAndView getAuthentication(@RequestBody MultiValueMap<String,String> form) {
@@ -60,13 +69,15 @@ public class AuthenticateController {
             mvc.addObject("username", user.getUsername());
             // mvc.addObject("username", username);
 
+            // this.userDetails.setUsername(user.getUsername()); // this is to set the details to a global property
+            // this.userDetails.setEmail(user.getEmail());
+            // this.userDetails.setPassword(user.getPassword());
+
         } else {
             mvc.setViewName("error");
             mvc.addObject("message", "Log in failed");
         }
 
-      
-        
         return mvc;
     }
 
@@ -147,9 +158,9 @@ public class AuthenticateController {
         mvc.setViewName("result");
 
         if (metal.getMetal() == "XAU") {
-            goldPrice = metal.getPrice();
+            this.goldPrice = metal.getPrice();
         } else {
-            silverPrice = metal.getPrice();
+            this.silverPrice = metal.getPrice();
         }
  
         System.out.println(">>>>>> getPrice activated: " );
@@ -161,8 +172,8 @@ public class AuthenticateController {
     public ModelAndView makeNewOrder() {
         ModelAndView mvc = new ModelAndView();
         mvc = new ModelAndView("order");
-        mvc.addObject("gold_price", goldPrice);
-        mvc.addObject("silver_price", silverPrice);
+        mvc.addObject("gold_price", this.goldPrice);
+        mvc.addObject("silver_price", this.silverPrice);
         return mvc;
     }
 
@@ -172,16 +183,95 @@ public class AuthenticateController {
         ModelAndView mvc = new ModelAndView();
         Optional<Order> optOrder = create(orderForm);
         
-        return null;
+        Order finalOrder = optOrder.get();
+
+        Optional<String> saveFinalOrder = orderSvc.saveOrderDetails(finalOrder);
+
+        if (saveFinalOrder.isPresent()) {
+            mvc.addObject("orderId", finalOrder.getOrderId());
+            mvc.addObject("details",finalOrder.getIndividualItems());
+            mvc.setStatus(HttpStatus.CREATED);
+            mvc.setViewName("finalOrder");
+        } else {
+            mvc.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            mvc.setViewName("error");
+        }
+
+        return mvc;
     }
 
 
     private Optional<Order> create(MultiValueMap<String, String> payload) {
 
         Order newOrder = new Order();
-        // newOrder.setUsername();
 
-        return null;
+        String orderId = UUID.randomUUID().toString().substring(0, 8);
+        newOrder.setOrderId(orderId);
+
+        // newOrder.setUsername(userDetails.getUsername());
+        newOrder.setUsername("mockDataHere");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            newOrder.setDate(sdf.parse(payload.getFirst("date")));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return Optional.empty();
+        }
+        
+
+        int i = 0;
+        while (true) {
+
+            String _qty = payload.getFirst("qty-%d".formatted(i));
+            if ((null == _qty) || (0 == _qty.trim().length()))
+                break;
+            Integer quantity = Integer.parseInt(_qty);
+
+            String _price = payload.getFirst("price-%d".formatted(i));
+            Integer price = Integer.parseInt(_price);
+
+            IndividualItem individualItem = new IndividualItem();
+
+            individualItem.setAmount(quantity);
+            individualItem.setPrice(price);
+
+            newOrder.addLineItem(individualItem);
+
+            i++;
+
+            // String _prodId = payload.getFirst("prod_id-%d".formatted(i));
+            // if ((null == _prodId) || (0 == _prodId.trim().length()))
+            //     break;
+            // String _qty = payload.getFirst("qty-%d".formatted(0));
+            // Integer productId = Integer.parseInt(_prodId);
+            // Integer quantity = Integer.parseInt(_qty);
+            // LineItem lineItem = new LineItem();
+            // lineItem.setProductId(productId);
+            // lineItem.setQuantity(quantity);
+            // po.addLineItem(lineItem);
+            // i++;
+        }
+
+        return Optional.of(newOrder);
+    }
+
+
+    @GetMapping("/checkout")
+    public ModelAndView getFinalBill() {
+        ModelAndView mvc = new ModelAndView();
+        mvc.setViewName("finalOrder");
+        // mvc = new ModelAndView("redirect:/register");
+        return mvc;
+    }
+
+
+    @GetMapping("/checkOrder")
+    public ModelAndView getPreviousOrder() {
+        ModelAndView mvc = new ModelAndView();
+        mvc.setViewName("checkOrder");
+        // mvc = new ModelAndView("redirect:/register");
+        return mvc;
     }
 
 

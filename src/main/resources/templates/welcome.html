@@ -5,6 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gold System</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
 </head>
 <body>
     <h1>Welcome <span data-th-text="${username}"></span></h1>
@@ -15,13 +23,14 @@
 
 
     <div>
-        <!-- <form>
-            <button type="submit" formmethod="GET" formaction="/getprices">
-                
-            </button>
-        </form> -->
-
         <h2> Get Latest Metal Prices here </h2>
+    </div>
+
+    <div class="uk-height-large uk-background-cover uk-overflow-hidden uk-light uk-flex" style="background-image: url('images/gold.jpg');">
+        <div class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">
+            <h1 uk-parallax="opacity: 0,1; y: -100,0; scale: 2,1; end: 50vh + 50%;">Headline</h1>
+            <p uk-parallax="opacity: 0,1; y: 100,0; scale: 0.5,1; end: 50vh + 50%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
     </div>
 
     <div class="container">
@@ -67,6 +76,58 @@
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
+
+                <form method="GET" action="/checkout">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary" type="submit">I want to see the checkout page</button>
+                    </div>
+                </form>
+
+                <!-- <form method="GET" action="/checkout"> -->
+                    <a th:href="@{checkout}">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary" type="submit">I want to see the checkout page</button>
+                        </div>
+                    </a>
+                    
+                <!-- </form> -->
+
+                <a th:href="@{checkOrder}">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary" type="submit">I want to check my order</button>
+                    </div>
+                </a>
+
+
+                <form class="uk-form-horizontal uk-margin-large">
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">Text</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Some text...">
+                        </div>
+                    </div>
+                
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-select">Select</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="form-horizontal-select">
+                                <option>Option 01</option>
+                                <option>Option 02</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div class="uk-margin">
+                        <div class="uk-form-label">Radio</div>
+                        <div class="uk-form-controls uk-form-controls-text">
+                            <label><input class="uk-radio" type="radio" name="radio1"> Option 01</label><br>
+                            <label><input class="uk-radio" type="radio" name="radio1"> Option 02</label>
+                        </div>
+                    </div>
+                
+                </form>
+
             </div>
         </div>
 </body>

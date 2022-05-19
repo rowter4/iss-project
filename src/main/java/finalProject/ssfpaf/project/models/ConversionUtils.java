@@ -33,7 +33,7 @@ public class ConversionUtils {
         return user;
     }
 
-    public static User convert(SqlRowSet rs) {
+    public static User convertRs(SqlRowSet rs) {
         User user = new User();
         user.setEmail(rs.getString("email"));
         user.setUsername(rs.getString("username"));

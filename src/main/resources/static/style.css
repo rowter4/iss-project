@@ -129,6 +129,10 @@ a {
     cursor: pointer;
 }
 
+.margin-15 {
+    margin-top : 15px;
+}
+
 .btn-blue {
 
     width: 150px;

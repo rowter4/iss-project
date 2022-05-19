@@ -41,8 +41,8 @@
 					<td>
 						<!-- <input type="number" name="prod_id-0" value="" min=1> -->
                         <div class="mb-3">
-                            <label for="type" class="form-label">Metal Type</label>
-                            <select class="form-select" id="type" name="type">
+                            <!-- <label for="type" class="form-label">Metal Type</label> -->
+                            <select class="form-select" id="type" name="type-0">
                                 <option value="XAU" selected>Gold</option>   
                                 <option value="XAG">Silver</option>
                                 <!-- <option value="ethiopia">Ethiopia</option>
@@ -51,7 +51,8 @@
                         </div>
 					</td>
 					<td>
-						<input type="number" name="price-0" value="${gold_price}">
+						<!-- <input type="number" name="price-0" value="${gold_price}"> -->
+                        <span data-th-text="${gold_price}" name="price-0"></span>
 					</td>
                     <td>
                         <input type="number" name="qty-0" value="">
@@ -62,7 +63,7 @@
 						<!-- <input type="number" name="prod_id-0" value="" min=1> -->
                         <div class="mb-3">
                             <!-- <label for="type" class="form-label">Metal Type</label> -->
-                            <select class="form-select" id="type" name="type">
+                            <select class="form-select" id="type" name="type-1">
                                 <option value="XAU" selected>Gold</option>   
                                 <option value="XAG">Silver</option>
                                 <!-- <option value="ethiopia">Ethiopia</option>
@@ -72,7 +73,7 @@
 					</td>
 					<td>
 						<!-- <input type="number" name="price-1" value=""> -->
-                        <span data-th-text="${silver_price}"></span>
+                        <span data-th-text="${silver_price}" name="price-1"></span>
 					</td>
 					<td>
 						<input type="number" name="qty-1" value="">

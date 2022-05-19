@@ -35,7 +35,7 @@ public class UserRepository {
         if (!rs.next())
             return Optional.empty();
 
-        return Optional.of(convert(rs));
+        return Optional.of(convertRs(rs));
     }
 
     public int createNewUser(String email, String username, String password) {
