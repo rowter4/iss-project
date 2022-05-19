@@ -26,6 +26,8 @@ import org.springframework.http.MediaType;
 @Service
 public class MetalService {
 
+    String goldPrice;
+
     // @Value("${metal.api.key}")
     private String metalKey = "goldapi-205eqr1al31k7c1k-io";
     
