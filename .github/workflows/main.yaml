@@ -1,5 +1,8 @@
 name: Compile, test, deploy
 on: ["push"]  # will trigger when we do a push on github
+env:
+  METAL_API_KEY: ${{ secrets.metal_api_key }}
+  SPRING_DATASOURCE_PASSWORD: ${{ secrets.spring_datasource_password }}
 jobs:
   step1:
     runs-on: ubuntu-latest #this is an empty ubuntu machine

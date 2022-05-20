@@ -1,4 +1,4 @@
-body {
+/* body {
     color: #000;
     overflow-x: hidden;
     height: 100%;
@@ -31,7 +31,13 @@ body {
     border-right: 1px solid #EEEEEE;
 }
 
-.facebook {
+.login_image {
+    margin-top: 150px;
+    justify-content: center;
+    display: flex;
+} */
+
+/* .facebook {
     background-color: #3b5998;
     color: #fff;
     font-size: 18px;
@@ -40,9 +46,9 @@ body {
     width: 35px;
     height: 35px;
     cursor: pointer;
-}
+} */
 
-.twitter {
+/* .twitter {
     background-color: #1DA1F2;
     color: #fff;
     font-size: 18px;
@@ -62,9 +68,9 @@ body {
     width: 35px;
     height: 35px;
     cursor: pointer;
-}
+} */
 
-.line {
+/* .line {
     height: 1px;
     width: 45%;
     background-color: #E0E0E0;
@@ -172,4 +178,4 @@ a {
         border-top: 1px solid #EEEEEE !important;
         margin: 0px 15px;
     }
-}
+} */

@@ -21,14 +21,14 @@ public class UserRepository {
     @Autowired
     private JdbcTemplate template;
 
-    public int getUsername(String email, String password) {
-        SqlRowSet response = template.queryForRowSet(SQL_CHECK_FOR_USERNAME, email, password);
+    // public int getUsername(String email, String password) {
+    //     SqlRowSet response = template.queryForRowSet(SQL_CHECK_FOR_USERNAME, email, password);
         
-        if (!response.next())
-            return 0;
+    //     if (!response.next())
+    //         return 0;
 
-        return response.getInt("no_of_users");
-    }
+    //     return response.getInt("no_of_users");
+    // }
 
     public Optional<User> findUserByEmail(String email, String password) {
         final SqlRowSet rs = template.queryForRowSet(SQL_CHECK_FOR_USERNAME, email, password);
@@ -38,10 +38,10 @@ public class UserRepository {
         return Optional.of(convertRs(rs));
     }
 
-    public int createNewUser(String email, String username, String password) {
-        SqlRowSet response = template.queryForRowSet(SQL_ADD_NEW_USER,email,username,password);
-        return 1;
-    }
+    // public int createNewUser(String email, String username, String password) {
+    //     SqlRowSet response = template.queryForRowSet(SQL_ADD_NEW_USER,email,username,password);
+    //     return 1;
+    // }
 
     public boolean addUserDetails(String username, String email, String password) {
         int count = template.update(SQL_ADD_NEW_USER, username, email, password);        

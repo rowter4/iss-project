@@ -1,134 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gold System</title>
+    <title>Gold Marketplace</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
-    <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
+         UIkit CSS 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
 
-    <!-- UIkit JS -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
+        <link href="uikit.css" rel="stylesheet">
+        <style>
+            .uk-height-changed {
+                height: 900px !important;
+            }
+        </style> -->
+
+    <link href="pricing.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
-<body>
-    <h1>Welcome <span data-th-text="${username}"></span></h1>
 
-    <div>
-        <img src="/images/hello.gif" alt="">
-    </div>
+<!-- <body>
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        UIkit JS 
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
 
-
-    <div>
-        <h2> Get Latest Metal Prices here </h2>
-    </div>
-
-    <div class="uk-height-large uk-background-cover uk-overflow-hidden uk-light uk-flex" style="background-image: url('images/gold.jpg');">
-        <div class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">
-            <h1 uk-parallax="opacity: 0,1; y: -100,0; scale: 2,1; end: 50vh + 50%;">Headline</h1>
-            <p uk-parallax="opacity: 0,1; y: 100,0; scale: 0.5,1; end: 50vh + 50%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="uk-background-image@m uk-background-cover uk-background-muted uk-height-changed uk-flex uk-flex-center uk-flex-middle" style="background-image: url(images/gold.jpg);">
+            <p class="uk-h4 uk-margin-remove uk-visible@m uk-light">Image shown</p>
         </div>
-    </div>
+    </body> -->
 
-    <div class="container">
-        <!-- <div class="row">
-            <div class="col">
-                <h1>Welcome to the Rowter Coffee Order Page</h1>
-                <h2>Order your coffee beans here </h2>
-            </div>
-        </div> -->
-        <div class="row">
-            <div class="col">
-                <form method="GET" action="/getprices">
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
 
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Metal Type</label>
-                        <select class="form-select" id="type" name="type">
-                            <option value="XAU" selected>Gold</option>   
-                            <option value="XAG">Silver</option>
-                            <!-- <option value="ethiopia">Ethiopia</option>
-                            <option value="colombia">Colombia</option> -->
-                        </select>
-                    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check" viewBox="0 0 16 16">
+            <title>Check</title>
+            <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+        </symbol>
+    </svg>
 
-                    <div class="mb-3">
-                        <label for="currency" class="form-label">Currency Format</label>
-                        <select class="form-select" id="currency" name="currency">
-                            <option value="USD" selected>US Dollar</option>
-                            <option value="AUD">Australia Dollar</option>
-                            <option value="SGD">Singaporea Dollar</option>  
-                        </select>
-                    </div>
+    <div class="container py-3">
+        <header>
+            <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img">
+                        <title>Bootstrap</title>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor">
+                        </path>
+                    </svg> -->
 
-                    <!-- <div class="mb-3">
-                        <label for="size" class="form-label">Size</label>
-                        <select class="form-select" id="size" name="size">
-                            <option value="s" selected>S</option>   
-                            <option value="m">M</option>
-                            <option value="l">L</option>
-                        </select>
-                    </div> -->
 
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                    </div>
-                </form>
+                    <img class="me-2" src="images/HatchfulExport-All/pinterest_board_photo.png" alt="" width="40"
+                        height="40" />
 
-                <form method="GET" action="/checkout">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary" type="submit">I want to see the checkout page</button>
-                    </div>
-                </form>
 
-                <!-- <form method="GET" action="/checkout"> -->
-                    <a th:href="@{checkout}">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary" type="submit">I want to see the checkout page</button>
-                        </div>
-                    </a>
-                    
-                <!-- </form> -->
-
-                <a th:href="@{checkOrder}">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary" type="submit">I want to check my order</button>
-                    </div>
+                    <span class="fs-4">
+                        Welcome <span data-th-text="${username}"></span>
+                    </span>
                 </a>
 
+                <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="/"> Logout </a>
+                </nav>
+            </div>
 
-                <form class="uk-form-horizontal uk-margin-large">
+            <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+                <h1 class="display-4 fw-normal">Get Your Latest Gold and Silver prices here! </h1>
+                <p class="fs-5 text-muted">Select from the list on what you would like to know today</p>
+            </div>
+        </header>
 
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="form-horizontal-text">Text</label>
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Some text...">
+        <main>
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Free</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small>
+                            </h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>10 users included</li>
+                                <li>2 GB of storage</li>
+                                <li>Email support</li>
+                                <li>Help center access</li>
+                            </ul>
+                            <button type="button" class="w-100 btn btn-lg btn-outline-warning">Sign up for free</button>
                         </div>
                     </div>
-                
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="form-horizontal-select">Select</label>
-                        <div class="uk-form-controls">
-                            <select class="uk-select" id="form-horizontal-select">
-                                <option>Option 01</option>
-                                <option>Option 02</option>
-                            </select>
+                </div>
+
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Metal Prices</h4>
+                        </div>
+                        <div class="card-body">
+                            <!-- <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small>
+                            </h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>20 users included</li>
+                                <li>10 GB of storage</li>
+                                <li>Priority email support</li>
+                                <li>Help center access</li>
+                            </ul>
+                            <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button> -->
+
+
+                            <form method="GET" action="/getprices">
+    
+                                <div class="mb-3">
+                                    <label for="type" class="form-label">Metal Type</label>
+                                    <select class="form-select" id="type" name="type">
+                                        <option value="XAU" selected>Gold</option>   
+                                        <option value="XAG">Silver</option>
+                                    </select>
+                                </div>
+            
+                                <div class="mb-3">
+                                    <label for="currency" class="form-label">Currency Format</label>
+                                    <select class="form-select" id="currency" name="currency">
+                                        <option value="USD" selected>US Dollar</option>
+                                        <option value="AUD">Australia Dollar</option>
+                                        <option value="SGD">Singapore Dollar</option> 
+                                        <option value="GBP">British Pound</option>  
+                                        <option value="EUR">European Euro</option> 
+                                        <option value="MYR">Malaysian Ringgit</option>   
+                                    </select>
+                                </div>
+                                <button type="submit" class="w-100 btn btn-lg btn-warning">Submit</button>
+                            </form>
                         </div>
                     </div>
+
+                    
+                </div>
+
                 
-                    <div class="uk-margin">
-                        <div class="uk-form-label">Radio</div>
-                        <div class="uk-form-controls uk-form-controls-text">
-                            <label><input class="uk-radio" type="radio" name="radio1"> Option 01</label><br>
-                            <label><input class="uk-radio" type="radio" name="radio1"> Option 02</label>
+
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm border-warning">
+                        <div class="card-header py-3 bg-warning border-warning">
+                            <h4 class="my-0 fw-normal">Checkout Page Link</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="GET" action="/checkout">
+                                <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button class="btn btn-primary" type="submit">I want to see the checkout page</button>
+                                </div> -->
+                                <!-- <h1 class="card-title pricing-card-title">$29
+                                    <small class="text-muted fw-light">/mo</small>
+                                </h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>30 users included</li>
+                                    <li>15 GB of storage</li>
+                                    <li>Phone and email support</li>
+                                    <li>Help center access</li>
+                                </ul> -->
+
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Key in your Order Id </label>
+                                    <input type="text" class="form-control" name="orderid" id="address" placeholder="443sda3q4">
+                                    <!-- <div class="invalid-feedback">
+                                        Please enter your shipping address.
+                                    </div> -->
+                                </div>
+
+                                <button type="submit" class="w-100 btn btn-lg btn-warning">Check now</button>
+                            </form>
+                            
                         </div>
                     </div>
-                
-                </form>
+                </div>
 
             </div>
-        </div>
+
+            <!-- <h2 class="display-6 text-center mb-4">Compare plans</h2>
+
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th style="width: 34%;"></th>
+                            <th style="width: 22%;">Free</th>
+                            <th style="width: 22%;">Pro</th>
+                            <th style="width: 22%;">Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-start">Public</th>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-start">Private</th>
+                            <td></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                        </tr>
+                    </tbody>
+
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-start">Permissions</th>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-start">Sharing</th>
+                            <td></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-start">Unlimited members</th>
+                            <td></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-start">Extra security</th>
+                            <td></td>
+                            <td></td>
+                            <td><svg class="bi" width="24" height="24">
+                                    <use xlink:href="#check" />
+                                </svg></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+        </main>
+
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <img class="me-2" src="images/HatchfulExport-All/pinterest_board_photo.png" alt="" width="40"
+                        height="40" />
+                    <small class="d-block mb-3 text-muted" style="margin-top: 10px;">&copy; 2017–2022</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Features</h5>
+                    <ul class="list-unstyled text-small">
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
+                        <!-- <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for
+                                developers</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li> -->
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled text-small">
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
+                        <!-- <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a>
+                        </li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li> -->
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>About</h5>
+                    <ul class="list-unstyled text-small">
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+                        <!-- <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li> -->
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+
+
+
 </body>
+
+
+
 </html>

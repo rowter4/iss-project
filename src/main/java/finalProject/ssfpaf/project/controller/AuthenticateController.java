@@ -23,6 +23,7 @@ import finalProject.ssfpaf.project.models.Order;
 import finalProject.ssfpaf.project.models.User;
 import finalProject.ssfpaf.project.service.MetalService;
 import finalProject.ssfpaf.project.service.OrderService;
+import finalProject.ssfpaf.project.service.UserException;
 import finalProject.ssfpaf.project.service.UserService;
 
 import static finalProject.ssfpaf.project.models.ConversionUtils.*;
@@ -48,7 +49,6 @@ public class AuthenticateController {
     @PostMapping("/authenticate")
     public ModelAndView getAuthentication(@RequestBody MultiValueMap<String,String> form) {
         
-        // String username = form.getFirst("username");
         String email = form.getFirst("email");
         String password = form.getFirst("password");
 
@@ -56,25 +56,16 @@ public class AuthenticateController {
 
         System.out.printf("+++ username: %s, password: %s\n", email, password);
 
-
-        // ModelAndView mvc = new ModelAndView();
-
-        // mvc.setViewName("index");
         Optional<User> opt = userSvc.userIsAuthenticated(email,password);
         
-        User user = opt.get();
-
-        if (opt.get() != null) {
+        if (opt.isPresent()) {
+            User user = opt.get();
             mvc.setViewName("welcome");
             mvc.addObject("username", user.getUsername());
-            // mvc.addObject("username", username);
-
-            // this.userDetails.setUsername(user.getUsername()); // this is to set the details to a global property
-            // this.userDetails.setEmail(user.getEmail());
-            // this.userDetails.setPassword(user.getPassword());
 
         } else {
-            mvc.setViewName("error");
+            mvc.setViewName("relogin");
+            mvc.addObject("alertMode", "fail"); 
             mvc.addObject("message", "Log in failed");
         }
 
@@ -91,26 +82,30 @@ public class AuthenticateController {
 
 
     @PostMapping("/newaccount")
-    // public ModelAndView getNewAccount(@RequestParam String username
-    // , @RequestParam String email, @RequestParam String password) {
-    public ModelAndView getNewAccount(@RequestBody MultiValueMap<String,String> form ) {
+    public ModelAndView getNewAccount(@RequestBody MultiValueMap<String,String> form ) throws UserException {
 
         User user = convert(form);
 
-        System.out.println(">>>>>> user: " + user);
+        System.out.println(">>>>>> user new Email: " + user.getEmail());
+        System.out.println(">>>>>> user new username: " + user.getEmail());
+
         ModelAndView mvc = new ModelAndView();
 
         try {
             userSvc.addNewUser(user);
-            mvc.addObject("message", "%s has been added as one of your bff".formatted(user.getUsername()));
+            mvc.setViewName("success-registered");
+            mvc.addObject("message", "Successful registration for %s".formatted(user.getUsername()));
             mvc.addObject("username", user.getUsername());
-        //     // Date dob = format.parse(form.getFirst("dob"));
-        //     // bff.setDob(dob);
-        } catch (Exception ex) {
+
+        } catch (UserException ex) {
+            mvc.setViewName("success-registered");
+            mvc.addObject("username", user.getUsername());
+            mvc.addObject("message", "%s".formatted(ex.getReason()));
+            mvc.setStatus(HttpStatus.BAD_REQUEST);
             ex.printStackTrace();
         }
 
-        mvc.setViewName("success-registered");
+        
         
         // String username = form.getFirst("username");
         // String email = form.getFirst("email");

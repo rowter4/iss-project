@@ -21,30 +21,30 @@ public class UserService {
         Optional<User> opt = userRepo.findUserByEmail(email,password);
 
         if (opt.isEmpty())
-            return Optional.empty();
-
-        // return 1 == userRepo.getUsername(email,password);    
+            return Optional.empty();   
         
         User user = opt.get();
-        // game.setComments(gameRepo.getCommentsByGid(gid));
         return Optional.of(user);
     }
 
     
 
-    public boolean userIsCreated(User newUser) {
-        return 1 == userRepo.createNewUser(newUser.getUsername(),newUser.getEmail(),newUser.getPassword());
-    }
+    // public boolean userIsCreated(User newUser) {
+    //     return 1 == userRepo.createNewUser(newUser.getUsername(),newUser.getEmail(),newUser.getPassword());
+    // }
 
     public void addNewUser(User user) throws UserException {
+        // check if the user already exists
+        Optional<User> opt = userRepo.findUserByEmail(user.getEmail(), user.getPassword());
 
-        boolean opt = userRepo.addUserDetails(user.getUsername(), user.getEmail(), user.getPassword());
-        // if (opt.isPresent())
-        //     throw new BFFException("%s is already your BFF".formatted(bff.getName()));
-
-        if (!userRepo.addUserDetails(user.getUsername(), user.getEmail(), user.getPassword()))
-            throw new UserException("Cannot add %s as new user. Please check with admin".formatted(user.getUsername()));
+        if (opt.isPresent()) // if user exists, then cannot register again
+            throw new UserException("%s is already a registered user".formatted(user.getUsername()));
+        else { // can add new user 
+            boolean opt2 = userRepo.addUserDetails(user.getUsername(), user.getEmail(), user.getPassword());
+            if (!opt2)
+                throw new UserException("Unable to add %s as new user. Please check with admin".formatted(user.getUsername()));
+        }
+      
     }
-        
-    
+           
 }

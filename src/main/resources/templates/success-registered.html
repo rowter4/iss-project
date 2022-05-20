@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Successful Registration</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Successful Registration</title>
 
-    <h2> Successful Registration for 
-        <span data-th-text="${username}"></span>
-    </h2>
-    <table>
-        <tr>
-            <td></td>
-            <td><span data-th-text="${message}"></span></td>
-        </tr>
-        <tr>
-            <div class="col d-flex justify-content-end">
-                <a href="/" class="btn btn-danger btn-lg">Back</a>
-            </div>
-        </tr>
-    </table>
-    
-</body>
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="signin.css" rel="stylesheet">
+    </head>
+
+    <body class="text-center">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+        <main class="form-signin w-100 m-auto">
+        
+                <img class="mb-4" src="images/HatchfulExport-All/youtube_profile_image.png" alt="" width="250" height="250">
+                
+                <h1 class="h3 mb-3 fw-normal"> 
+                    <span data-th-text="${message}"></span>
+                </h1>
+
+            
+                <!-- <div class="form-floating">
+                    <label for="floatingInput"> 
+                        <span data-th-text="${message}"></span>
+                    </label>
+                </div> -->
+
+
+                <div class="col d-flex justify-content-center" style="margin-top: 30px;">
+                    <a href="/" class="btn btn-primary btn-lg"> Log in </a>
+                </div>
+                
+                <p class="mt-5 mb-3 text-muted">&copy; 2022</p>            
+
+        </main>
+    </body>
+
 </html>
