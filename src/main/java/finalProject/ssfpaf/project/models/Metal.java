@@ -10,14 +10,26 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 
 public class Metal {
-    public Integer price;
+    private Integer itemId;
     public String metal;
+    public String currency;
+    public Integer price;
+    public Integer amount;
+
+    public Integer getItemId() { return itemId; }
+    public void setItemId(Integer itemId) {  this.itemId = itemId; }
 
     public Integer getPrice() { return price;  }
     public void setPrice(Integer price) { this.price = price;  }
 
     public String getMetal() { return metal; }
     public void setMetal(String metal) { this.metal = metal; }
+
+    public String getCurrency() { return currency; }
+    public void setCurrency(String currency) { this.currency = currency; }
+
+    public Integer getAmount() { return amount; }
+    public void setAmount(Integer amount) {  this.amount = amount;}
 
     public static Metal create(String json) throws IOException {
         Metal metalInfo = new Metal();
@@ -30,8 +42,9 @@ public class Metal {
             JsonObject o = reader.readObject();
 
 
-            metalInfo.price = o.getInt("price");
-            metalInfo.metal = o.getString("metal");
+            metalInfo.setPrice(o.getInt("price"));
+            metalInfo.setMetal(o.getString("metal"));
+            metalInfo.setCurrency(o.getString("currency"));
             // JsonObjectBuilder builder = Json.createObjectBuilder();
             
             // metal.metal = o.getString("metal");
@@ -41,6 +54,7 @@ public class Metal {
             
             System.out.println(">>>>> metal: \n" + metalInfo.getMetal());
             System.out.println(">>>>> price: \n" + metalInfo.getPrice());
+            System.out.println(">>>>> currency: \n" + metalInfo.getCurrency());
             
         } catch (IOException ex) {
             ex.printStackTrace();

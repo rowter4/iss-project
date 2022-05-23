@@ -13,9 +13,9 @@ public class OrderRepository {
     @Autowired
     public JdbcTemplate template;
 
-    public boolean insertOrderDetails(Order orderMetaData) {
+    public boolean insertOrderDetails(Order orderMetaData, String username) {
         int count = template.update(SQL_INSERT_ORDER_DETAILS,
-                                     orderMetaData.getOrderId(), orderMetaData.getUsername(), orderMetaData.getDate());
+                                     orderMetaData.getOrderId(), username);
 
         return 1 == count;
     }

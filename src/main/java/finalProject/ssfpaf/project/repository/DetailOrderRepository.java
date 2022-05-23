@@ -1,12 +1,13 @@
 package finalProject.ssfpaf.project.repository;
 
-import java.util.List;
+// import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import finalProject.ssfpaf.project.models.IndividualItem;
+// import finalProject.ssfpaf.project.models.IndividualItem;
+import finalProject.ssfpaf.project.models.Metal;
 import finalProject.ssfpaf.project.models.Order;
 
 import static finalProject.ssfpaf.project.repository.Queries.*;
@@ -18,15 +19,15 @@ public class DetailOrderRepository {
     public JdbcTemplate template;
 
     public boolean insertAllOrderDetails(Order orderDetails) {
-        for (IndividualItem perItem: orderDetails.getIndividualItems())
+        for (Metal perItem: orderDetails.getMetalList())
             if (!insertLineItem(orderDetails.getOrderId(), perItem))
                 return false;
         return true;
     }
 
-    public boolean insertLineItem(String orderId, IndividualItem perItem) {
+    public boolean insertLineItem(String orderId, Metal perItem) {
         int count = template.update(SQL_INSERT_ITEMS_LIST,
-                                    perItem.getAmount(), perItem.getPrice() , orderId);
+                                    orderId, perItem.getCurrency(), perItem.getPrice() , perItem.getAmount(), perItem.getMetal());
         return 1 == count;
     }
 }

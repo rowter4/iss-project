@@ -3,9 +3,7 @@ package finalProject.ssfpaf.project.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
-// import org.springframework.util.MultiValueMap;
 
 import finalProject.ssfpaf.project.models.User;
 import finalProject.ssfpaf.project.repository.UserRepository;
@@ -26,8 +24,6 @@ public class UserService {
         User user = opt.get();
         return Optional.of(user);
     }
-
-    
 
     // public boolean userIsCreated(User newUser) {
     //     return 1 == userRepo.createNewUser(newUser.getUsername(),newUser.getEmail(),newUser.getPassword());

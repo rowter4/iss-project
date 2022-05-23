@@ -20,15 +20,20 @@ public class OrderService {
     private DetailOrderRepository detailOrderRepo;
 
     @Transactional
-    public Optional<String> saveOrderDetails(Order finalOrder) {
+    public Optional<String> saveOrderDetails(Order finalOrder, String username) {
         try {
-            orderRepo.insertOrderDetails(finalOrder);
+            System.out.printf(">>> running transactional details and populate the table \n");
+            orderRepo.insertOrderDetails(finalOrder, username);
             detailOrderRepo.insertAllOrderDetails(finalOrder);
             
         } catch (Exception ex) {
             return Optional.empty();
         }
-        return null;
+
+        return Optional.of(finalOrder.getOrderId());
     }
+
+
+    // public Optional<Order>
 
 }

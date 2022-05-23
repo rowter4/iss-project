@@ -44,7 +44,9 @@ public class AuthenticateController {
 
     Integer goldPrice;
     Integer silverPrice;
+    String currency;
     User userDetails;
+    String username;
 
     @PostMapping("/authenticate")
     public ModelAndView getAuthentication(@RequestBody MultiValueMap<String,String> form) {
@@ -62,6 +64,7 @@ public class AuthenticateController {
             User user = opt.get();
             mvc.setViewName("welcome");
             mvc.addObject("username", user.getUsername());
+            this.username = user.getUsername();
 
         } else {
             mvc.setViewName("relogin");
@@ -104,71 +107,50 @@ public class AuthenticateController {
             mvc.setStatus(HttpStatus.BAD_REQUEST);
             ex.printStackTrace();
         }
-
-        
-        
-        // String username = form.getFirst("username");
-        // String email = form.getFirst("email");
-        // String password = form.getFirst("password");
-
-        // System.out.printf(">>> q = %s, limit = %d, rating = %s\n", username, email, password);
-
-       
-
-        // User user = new User();
-
-        // user.setUsername(form.getFirst("name"));
-        // user.setEmail(form.getFirst("email"));
-        // user.setPassword(form.getFirst("password"));
-
-        // System.out.printf(">>> username = %d\n", form.getFirst("name"));
-        // System.out.printf(">>> email = %d\n", form.getFirst("email"));
-        // System.out.printf(">>> password = %d\n", form.getFirst("password"));
-
-        // boolean userId = userSvc.userIsCreated(user); 
-
-        // if (!userSvc.userIsCreated(user.getUsername(), user.getEmail(), user.getPassword())) {
-        //     mvc.setViewName("welcome");
-        //     mvc.addObject("username", user.getUsername());
-
-        // }
         
         return mvc;
     }
 
     @GetMapping(path = "/getprices")
-    public ModelAndView getMetalPrice( @RequestParam String type, @RequestParam String currency ) {
+    public ModelAndView getMetalPrice( @RequestParam String currency ) {
 
-        System.out.printf(">>> type = %s, currency = %s\n", type, currency);
+        System.out.printf(">>> currency = %s\n", currency);
 
-        Optional<Metal> opt = metalSvc.getPrice(type,currency);
+        Optional<Metal> opt = metalSvc.getPrice(currency);
 
         ModelAndView mvc = new ModelAndView();
 
         Metal metal = opt.get();
 
-
+        mvc.addObject("username", this.username);
         mvc.addObject("metal", metal.getMetal());
         mvc.addObject("price", metal.getPrice());
+        mvc.addObject("currency", metal.getCurrency());
         mvc.setViewName("result");
 
-        if (metal.getMetal() == "XAU") {
-            this.goldPrice = metal.getPrice();
-        } else {
-            this.silverPrice = metal.getPrice();
-        }
+        this.currency = metal.getCurrency();
+        this.goldPrice = metal.getPrice();
+        this.silverPrice = metal.getPrice(); // by right there is a need to call another API to get the price of Silver. However, I have limited API calls. 
+
+        // if (metal.getMetal() == "XAU") {
+        //     this.goldPrice = metal.getPrice();
+        // } else {
+        //     this.silverPrice = metal.getPrice();
+        // }
  
         System.out.println(">>>>>> getPrice activated: " );
-        // mvc = new ModelAndView("redirect:/register");
         return mvc;
     }
 
     @GetMapping("/order")
     public ModelAndView makeNewOrder() {
+
+        System.out.printf(">>> currency = %s,  price = %s\n", this.currency , this.goldPrice);
         ModelAndView mvc = new ModelAndView();
         mvc = new ModelAndView("order");
+        mvc.addObject("currency", this.currency);
         mvc.addObject("gold_price", this.goldPrice);
-        mvc.addObject("silver_price", this.silverPrice);
+        mvc.addObject("silver_price", this.goldPrice);
         return mvc;
     }
 
@@ -176,19 +158,30 @@ public class AuthenticateController {
     public ModelAndView saveOrder(@RequestBody MultiValueMap<String,String> orderForm) {
 
         ModelAndView mvc = new ModelAndView();
+
         Optional<Order> optOrder = create(orderForm);
+
+        if (optOrder.isEmpty()) {
+            mvc.setStatus(HttpStatus.BAD_REQUEST);
+            mvc.setViewName("error");
+            mvc.addObject("error_message", "Unable to create individual line order");
+            return mvc;
+        } 
         
         Order finalOrder = optOrder.get();
 
-        Optional<String> saveFinalOrder = orderSvc.saveOrderDetails(finalOrder);
+        System.out.printf(">>> orderID generated = %s\n", finalOrder.getOrderId());
+        System.out.printf(">>> items in the metal list = %d\n", finalOrder.getMetalList().size());
+        System.out.printf(">>> username = %s\n", this.username);
 
-        if (saveFinalOrder.isPresent()) {
-            mvc.addObject("orderId", finalOrder.getOrderId());
-            mvc.addObject("details",finalOrder.getIndividualItems());
+        Optional<String> finalOrderId = orderSvc.saveOrderDetails(finalOrder, this.username);
+
+        if (finalOrderId.isPresent()) {
+            mvc.addObject("orderId", finalOrderId);
             mvc.setStatus(HttpStatus.CREATED);
             mvc.setViewName("finalOrder");
         } else {
-            mvc.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            mvc.setStatus(HttpStatus.BAD_REQUEST);
             mvc.setViewName("error");
         }
 
@@ -197,55 +190,44 @@ public class AuthenticateController {
 
 
     private Optional<Order> create(MultiValueMap<String, String> payload) {
-
+    
         Order newOrder = new Order();
 
         String orderId = UUID.randomUUID().toString().substring(0, 8);
         newOrder.setOrderId(orderId);
 
-        // newOrder.setUsername(userDetails.getUsername());
-        newOrder.setUsername("mockDataHere");
+        newOrder.setUsername(this.username);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            newOrder.setDate(sdf.parse(payload.getFirst("date")));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return Optional.empty();
-        }
+        // SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        // try {
+        //     newOrder.setDate(sdf.parse(payload.getFirst("date")));
+        // } catch (Exception ex) {
+        //     ex.printStackTrace();
+        //     return Optional.empty();
+        // }
         
 
-        int i = 0;
-        while (true) {
+        for (int i = 0; i < 2; i++)  {
+
+            Metal metalItem = new Metal();
+            metalItem.setCurrency(this.currency);
+            metalItem.setPrice(this.goldPrice);
+
+            if (i == 0) {
+                metalItem.setMetal("Gold");
+            } else {
+                metalItem.setMetal("Silver");
+            }
 
             String _qty = payload.getFirst("qty-%d".formatted(i));
             if ((null == _qty) || (0 == _qty.trim().length()))
-                break;
+                _qty = "0";
             Integer quantity = Integer.parseInt(_qty);
 
-            String _price = payload.getFirst("price-%d".formatted(i));
-            Integer price = Integer.parseInt(_price);
+            metalItem.setAmount(quantity);
 
-            IndividualItem individualItem = new IndividualItem();
+            newOrder.addMetalList(metalItem);
 
-            individualItem.setAmount(quantity);
-            individualItem.setPrice(price);
-
-            newOrder.addLineItem(individualItem);
-
-            i++;
-
-            // String _prodId = payload.getFirst("prod_id-%d".formatted(i));
-            // if ((null == _prodId) || (0 == _prodId.trim().length()))
-            //     break;
-            // String _qty = payload.getFirst("qty-%d".formatted(0));
-            // Integer productId = Integer.parseInt(_prodId);
-            // Integer quantity = Integer.parseInt(_qty);
-            // LineItem lineItem = new LineItem();
-            // lineItem.setProductId(productId);
-            // lineItem.setQuantity(quantity);
-            // po.addLineItem(lineItem);
-            // i++;
         }
 
         return Optional.of(newOrder);
@@ -261,8 +243,8 @@ public class AuthenticateController {
     }
 
 
-    @GetMapping("/checkOrder")
-    public ModelAndView getPreviousOrder() {
+    @GetMapping("/checkOrderId")
+    public ModelAndView getPreviousOrder(@RequestParam String orderid) {
         ModelAndView mvc = new ModelAndView();
         mvc.setViewName("checkOrder");
         // mvc = new ModelAndView("redirect:/register");

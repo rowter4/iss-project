@@ -12,9 +12,9 @@ public interface Queries {
         "delete from users where username = ?";
     
     public static final String SQL_INSERT_ORDER_DETAILS = 
-        "insert into po(ord_id, username, order_date) values (?,?,?) " ;
+        "insert into po(ord_id, username) values (?,?) " ;
 
     public static final String SQL_INSERT_ITEMS_LIST = 
-        "insert into individual_item(amount, price, ord_id) values (?,?,?)" ; 
+        "insert into individual_item(ord_id, currency, price, amount, material) values (?,?,?,?,?)" ; 
 
 }

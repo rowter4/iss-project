@@ -1,90 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.98.0">
+	<title>Checkout example · Bootstrap v5.2</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/checkout/">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+
+	<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+
+		.b-example-divider {
+			height: 3rem;
+			background-color: rgba(0, 0, 0, .1);
+			border: solid rgba(0, 0, 0, .15);
+			border-width: 1px 0;
+			box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+		}
+
+		.b-example-vr {
+			flex-shrink: 0;
+			width: 1.5rem;
+			height: 100vh;
+		}
+
+		.bi {
+			vertical-align: -.125em;
+			fill: currentColor;
+		}
+
+		.nav-scroller {
+			position: relative;
+			z-index: 2;
+			height: 2.75rem;
+			overflow-y: hidden;
+		}
+
+		.nav-scroller .nav {
+			display: flex;
+			flex-wrap: nowrap;
+			padding-bottom: 1rem;
+			margin-top: -1px;
+			overflow-x: auto;
+			text-align: center;
+			white-space: nowrap;
+			-webkit-overflow-scrolling: touch;
+		}
+	</style>
+
+
+	<!-- Custom styles for this template -->
+	<link href="form-validation.css" rel="stylesheet">
 </head>
-<body>
-    <h1>New Commodoties Order</h1>
 
-	<form method="POST" action="/make_order">
+<body class="bg-light">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+		crossorigin="anonymous"></script>
+	<div class="container">
+		<main>
+			<div class="py-5 text-center">
+				<img class="d-block mx-auto mb-4" src="images/HatchfulExport-All/youtube_profile_image.png" alt=""
+					width="150" height="150">
+				<h2>Commodities Order form</h2>
+				<p class="lead">Key in the details for the commodities that you require</p>
+			</div>
 
-		<table>
-			<tr>
-				<td>
-					<label for="name">Name</label>
-				</td>
-				<td>
-					<input id="name" type="text" name="name" size="40" required>
-				</td>
-			</tr>
-			<tr>
-				<td>Date:</td>
-				<td>
-					<input type="date" name="date">
-				</td>
-			</tr>
-		</table>
+			<div class="row g-5">
+				<div class="col col-lg-12">
+					<h4 class="mb-3">Order Details</h4>
+					<form method="POST" action="/make_order">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Commodity</th>
+									<th scope="col">Price</th>
+									<th scope="col">Amount</th>
+								</tr>
+							</thead>
 
-		<table>
-			<thead>
-				<tr>
-					<th> Type of Commodity </th>
-                    <th> Price (in $ / g)</th>
-					<th> Quantity (in grams)</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<!-- <input type="number" name="prod_id-0" value="" min=1> -->
-                        <div class="mb-3">
-                            <!-- <label for="type" class="form-label">Metal Type</label> -->
-                            <select class="form-select" id="type" name="type-0">
-                                <option value="XAU" selected>Gold</option>   
-                                <option value="XAG">Silver</option>
-                                <!-- <option value="ethiopia">Ethiopia</option>
-                                <option value="colombia">Colombia</option> -->
-                            </select>
-                        </div>
-					</td>
-					<td>
-						<!-- <input type="number" name="price-0" value="${gold_price}"> -->
-                        <span data-th-text="${gold_price}" name="price-0"></span>
-					</td>
-                    <td>
-                        <input type="number" name="qty-0" value="">
-                    </td>
-				</tr>
-				<tr>
-                    <td>
-						<!-- <input type="number" name="prod_id-0" value="" min=1> -->
-                        <div class="mb-3">
-                            <!-- <label for="type" class="form-label">Metal Type</label> -->
-                            <select class="form-select" id="type" name="type-1">
-                                <option value="XAU" selected>Gold</option>   
-                                <option value="XAG">Silver</option>
-                                <!-- <option value="ethiopia">Ethiopia</option>
-                                <option value="colombia">Colombia</option> -->
-                            </select>
-                        </div>
-					</td>
-					<td>
-						<!-- <input type="number" name="price-1" value=""> -->
-                        <span data-th-text="${silver_price}" name="price-1"></span>
-					</td>
-					<td>
-						<input type="number" name="qty-1" value="">
-					</td>
-				</tr>
-				
-			</tbody>
-		</table>
+							<tbody class="table-group-divider">
+								<tr>
+									<th scope="row">1</th>
+									<td>
+										<input type="text" class="form-control" id="material-0" name="material-0" value="Gold" placeholder="Gold" disabled>
+									</td>
 
-		<button type="submit">Create PO</button>
+									<td>
+										<div class="input-group mb-3">
+											<span class="input-group-text">
+												<span data-th-text="${currency}"></span>
+											</span>
+											<input type="text" id="price-0" name="price-0" class="form-control" th:value="${gold_price}" disabled>
+										</div>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="qty-0" name="qty-0" value="">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">2</th>
+									<td>
+										<input type="text" class="form-control" id="material-1" name="material-1" value="Silver" placeholder="Silver" disabled >
+									</td>
+									<td>
+										<div class="input-group mb-3">
+											<span class="input-group-text">
+												<span data-th-text="${currency}"></span>
+											</span>
+											<input type="text" id="price-1" name="price-1" class="form-control" th:value="${silver_price}" disabled>
+										</div>
+										
+									</td>
+									<td>
+										<input type="text" class="form-control" id="qty-1" name="qty-1"  value="">
+									</td>
+								</tr>
 
-	</form>
+							</tbody>
+						</table>
+
+						<!-- <hr class="my-4"> -->
+						<div class="py-5 text-center">
+							<!-- <img class="d-block mx-auto mb-4" src="images/HatchfulExport-All/youtube_profile_image.png" alt=""
+								width="150" height="150">
+							<h2>Commodities Order form</h2>
+							<p class="lead">Key in the details for the commodities that you require</p> -->
+							<button class="w-30 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+						</div>
+						<!-- <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button> -->
+					</form>
+				</div>
+			</div>
+		</main>
+
+		<footer class="my-5 pt-5 text-muted text-center text-small">
+			<p class="mb-1">&copy; 2017–2022 Company Name</p>
+			<ul class="list-inline">
+				<li class="list-inline-item"><a href="#">Privacy</a></li>
+				<li class="list-inline-item"><a href="#">Terms</a></li>
+				<li class="list-inline-item"><a href="#">Support</a></li>
+			</ul>
+		</footer>
+	</div>
+
+
+	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="form-validation.js"></script>
 </body>
+
 </html>

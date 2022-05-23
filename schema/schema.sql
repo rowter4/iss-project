@@ -16,7 +16,7 @@ create table users (
 create table po (
     ord_id char(8) not null,
     username varchar(256) not null,
-    order_date date default (current_date),
+
     primary key(ord_id),
     
     constraint fk_username
@@ -28,8 +28,10 @@ create table po (
 
 create table individual_item (
     item_id int not null auto_increment,
+    material varchar(10),
     amount float(5,2),
 	price float(10,2),
+    currency char(3),
     
     -- foreign keys
     ord_id char(8),
