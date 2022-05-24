@@ -18,15 +18,25 @@
                 <img class="mb-4" src="images/HatchfulExport-All/youtube_profile_image.png" alt="" width="250" height="250">
                 
                 <h1 class="h3 mb-3 fw-normal"> 
-                    This is you order ID : <span data-th-text="${orderId}"></span>
+                    This is you order ID : <span data-th-text="${orderId}"></span> <br><br>
 
                     You have successfully ordered your commodity! 
                 </h1>
 
 
-                <div class="col d-flex justify-content-center" style="margin-top: 30px;">
-                    <!-- <a href="/" class="btn btn-primary btn-lg"> Log in </a> -->
-                </div>
+                <!-- <div class="col d-flex justify-content-center" style="margin-top: 30px;">
+                    <a href="/authenticate" class="btn btn-primary btn-lg"> Back  </a>
+                </div> -->
+
+                <form method="GET" action="/goHome">
+                    <div class="row mb-4 px-3">
+                        <small class="font-weight-bold">
+                            <button type="submit" class="btn btn-primary" style="margin-left: 10px;">
+                                Back to Home
+                            </button>
+                        </small>
+                    </div>
+                </form>
                 
                 <p class="mt-5 mb-3 text-muted">&copy; 2023</p>            
 

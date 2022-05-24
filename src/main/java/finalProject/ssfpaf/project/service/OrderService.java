@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import finalProject.ssfpaf.project.models.Metal;
 import finalProject.ssfpaf.project.models.Order;
 import finalProject.ssfpaf.project.repository.DetailOrderRepository;
 import finalProject.ssfpaf.project.repository.OrderRepository;
@@ -34,6 +35,22 @@ public class OrderService {
     }
 
 
-    // public Optional<Order>
+    public Optional<Metal> getGoldDetails(String orderid) {
+
+        Optional<Metal> opt = detailOrderRepo.getGoldByOrderId(orderid);
+        if (opt.isEmpty())
+            return Optional.empty();
+
+        return Optional.of(opt.get());
+    }
+
+    public Optional<Metal> getSilverDetails(String orderid) {
+
+        Optional<Metal> opt = detailOrderRepo.getSilverByOrderId(orderid);
+        if (opt.isEmpty())
+            return Optional.empty();
+            
+        return Optional.of(opt.get());
+    }
 
 }

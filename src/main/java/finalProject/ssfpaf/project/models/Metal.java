@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 // import jakarta.json.JsonObjectBuilder;
@@ -61,5 +63,16 @@ public class Metal {
         }
 
         return metalInfo;
+    }
+
+    public static Metal convertRs(SqlRowSet rs) {
+        Metal metal = new Metal();
+
+        metal.setMetal(rs.getString("material"));
+        metal.setAmount(rs.getInt("amount"));
+        metal.setCurrency(rs.getString("currency"));
+        metal.setPrice(rs.getInt("price"));
+
+        return metal;
     }
 }

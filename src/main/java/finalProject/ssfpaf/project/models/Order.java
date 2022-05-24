@@ -15,12 +15,9 @@ public class Order {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
-    // public Date getDate() { return date; }
-    // public void setDate(Date date) { this.date = date; }
-
     public List<Metal> getMetalList() { return metalList; }
     public void setMetalList(List<Metal> metalList) { this.metalList = metalList;  }
-    public void addMetalList(Metal metalItem) { this.metalList.add(metalItem); }
+    public void addMetalList(Metal metalItem) { this.metalList.add(metalItem); } 
 
     
 }

@@ -29,8 +29,8 @@ create table po (
 create table individual_item (
     item_id int not null auto_increment,
     material varchar(10),
-    amount float(5,2),
-	price float(10,2),
+    amount int,
+	price int,
     currency char(3),
     
     -- foreign keys

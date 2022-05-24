@@ -1,6 +1,7 @@
 package finalProject.ssfpaf.project.controller;
 
-import java.text.SimpleDateFormat;
+// import java.util.List;
+// import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import finalProject.ssfpaf.project.models.IndividualItem;
+// import finalProject.ssfpaf.project.models.IndividualItem;
 import finalProject.ssfpaf.project.models.Metal;
 import finalProject.ssfpaf.project.models.Order;
 import finalProject.ssfpaf.project.models.User;
@@ -79,7 +80,6 @@ public class AuthenticateController {
     public ModelAndView getRegistration() {
         ModelAndView mvc = new ModelAndView();
         mvc.setViewName("register");
-        // mvc = new ModelAndView("redirect:/register");
         return mvc;
     }
 
@@ -122,21 +122,17 @@ public class AuthenticateController {
 
         Metal metal = opt.get();
 
-        mvc.addObject("username", this.username);
-        mvc.addObject("metal", metal.getMetal());
-        mvc.addObject("price", metal.getPrice());
-        mvc.addObject("currency", metal.getCurrency());
-        mvc.setViewName("result");
-
         this.currency = metal.getCurrency();
         this.goldPrice = metal.getPrice();
-        this.silverPrice = metal.getPrice(); // by right there is a need to call another API to get the price of Silver. However, I have limited API calls. 
+        this.silverPrice = (metal.getPrice() / 4) ; // by right there is a need to call another API to get the price of Silver. However, I have limited API calls. 
 
-        // if (metal.getMetal() == "XAU") {
-        //     this.goldPrice = metal.getPrice();
-        // } else {
-        //     this.silverPrice = metal.getPrice();
-        // }
+        mvc.addObject("username", this.username);
+        mvc.addObject("metal", metal.getMetal());
+        mvc.addObject("gold_price", this.goldPrice);
+        mvc.addObject("silver_price", this.silverPrice);
+
+        mvc.addObject("currency", metal.getCurrency());
+        mvc.setViewName("result");
  
         System.out.println(">>>>>> getPrice activated: " );
         return mvc;
@@ -150,7 +146,7 @@ public class AuthenticateController {
         mvc = new ModelAndView("order");
         mvc.addObject("currency", this.currency);
         mvc.addObject("gold_price", this.goldPrice);
-        mvc.addObject("silver_price", this.goldPrice);
+        mvc.addObject("silver_price", this.silverPrice);
         return mvc;
     }
 
@@ -176,8 +172,9 @@ public class AuthenticateController {
 
         Optional<String> finalOrderId = orderSvc.saveOrderDetails(finalOrder, this.username);
 
+
         if (finalOrderId.isPresent()) {
-            mvc.addObject("orderId", finalOrderId);
+            mvc.addObject("orderId", finalOrderId.get());
             mvc.setStatus(HttpStatus.CREATED);
             mvc.setViewName("finalOrder");
         } else {
@@ -189,34 +186,26 @@ public class AuthenticateController {
     }
 
 
-    private Optional<Order> create(MultiValueMap<String, String> payload) {
+    public Optional<Order> create(MultiValueMap<String, String> payload) {
     
         Order newOrder = new Order();
 
         String orderId = UUID.randomUUID().toString().substring(0, 8);
         newOrder.setOrderId(orderId);
 
-        newOrder.setUsername(this.username);
-
-        // SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        // try {
-        //     newOrder.setDate(sdf.parse(payload.getFirst("date")));
-        // } catch (Exception ex) {
-        //     ex.printStackTrace();
-        //     return Optional.empty();
-        // }
-        
+        newOrder.setUsername(this.username);        
 
         for (int i = 0; i < 2; i++)  {
 
             Metal metalItem = new Metal();
             metalItem.setCurrency(this.currency);
-            metalItem.setPrice(this.goldPrice);
-
+            
             if (i == 0) {
                 metalItem.setMetal("Gold");
+                metalItem.setPrice(this.goldPrice);
             } else {
                 metalItem.setMetal("Silver");
+                metalItem.setPrice(this.silverPrice);
             }
 
             String _qty = payload.getFirst("qty-%d".formatted(i));
@@ -238,16 +227,52 @@ public class AuthenticateController {
     public ModelAndView getFinalBill() {
         ModelAndView mvc = new ModelAndView();
         mvc.setViewName("finalOrder");
-        // mvc = new ModelAndView("redirect:/register");
         return mvc;
     }
 
 
     @GetMapping("/checkOrderId")
-    public ModelAndView getPreviousOrder(@RequestParam String orderid) {
+    public ModelAndView getPreviousOrder(@RequestParam(name="orderid") String orderid) {
         ModelAndView mvc = new ModelAndView();
+
+        Optional<Metal> goldDetails = orderSvc.getGoldDetails(orderid);
+        Optional<Metal> silverDetails = orderSvc.getSilverDetails(orderid);
+
+        if (goldDetails.isEmpty() || silverDetails.isEmpty()) {
+            mvc.addObject("message", "Order ID is not valid");
+            mvc.setViewName("checkOrder");
+            return mvc;
+        }
+
+        Metal _goldD = goldDetails.get();
+
+        System.out.printf(">>> goldDetails generated = %d\n", _goldD.getAmount());
+        System.out.printf(">>> amount list = %d\n", _goldD.getPrice());
+        System.out.printf(">>> currency = %s\n", _goldD.getCurrency());
+        
+        mvc.addObject("orderid", orderid);
+        mvc.addObject("currency", _goldD.getCurrency());
+        mvc.addObject("gold_price", _goldD.getPrice());
+        mvc.addObject("gold_amount", _goldD.getAmount());
+
+
+        Metal _silverD = silverDetails.get();
+
+        mvc.addObject("silver_amount", _silverD.getAmount());
+        mvc.addObject("silver_price", _silverD.getPrice());
+
+
         mvc.setViewName("checkOrder");
-        // mvc = new ModelAndView("redirect:/register");
+        return mvc;
+    }
+
+
+    @GetMapping("/goHome")
+    public ModelAndView navigateToHome() {
+
+        ModelAndView mvc = new ModelAndView();
+        mvc.addObject("username", this.username);
+        mvc.setViewName("welcome");
         return mvc;
     }
 

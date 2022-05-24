@@ -17,4 +17,9 @@ public interface Queries {
     public static final String SQL_INSERT_ITEMS_LIST = 
         "insert into individual_item(ord_id, currency, price, amount, material) values (?,?,?,?,?)" ; 
 
+    public static final String SQL_GET_GOLD_DETAILS_FROM_ORDER_ID = 
+        "select * from individual_item where ord_id = ? and material = 'Gold'";
+    
+    public static final String SQL_GET_SILVER_DETAILS_FROM_ORDER_ID = 
+        "select * from individual_item where ord_id = ? and material = 'Silver' ";
 }

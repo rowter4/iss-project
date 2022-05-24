@@ -1,51 +1,187 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Successful Purchase</title>
+
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="signin.css" rel="stylesheet">
+    </head>
+
+    <body class="text-center">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+        <main class="form-signin w-100 m-auto">
+        
+                <img class="mb-4" src="images/HatchfulExport-All/youtube_profile_image.png" alt="" width="250" height="250">
+                
+                <h1 class="h3 mb-3 fw-normal"> 
+                    This is you order ID : <span data-th-text="${orderId}"></span>
+
+                    You have successfully ordered your commodity! 
+                </h1>
+
+
+                <div class="col d-flex justify-content-center" style="margin-top: 30px;">
+                    <a href="/authenticate" class="btn btn-primary btn-lg"> Log in </a>
+                </div>
+                
+                <p class="mt-5 mb-3 text-muted">&copy; 2023</p>            
+
+        </main>
+    </body>
+
+</html> -->
+
+
+<!doctype html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.98.0">
+    <title>Checkout example · Bootstrap v5.2</title>
 
-    <!-- UIkit JS -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/checkout/">
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
 </head>
-<body>
 
-    <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('../images/gold.jpg');">
+<body class="bg-light">
 
-        <h1 class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">Headline</h1>
-    
+    <div class="container">
+        <main>
+            <div class="py-5 text-center">
+                <img class="d-block mx-auto mb-4" src="images/HatchfulExport-All/youtube_profile_image.png" alt=""
+                    width="100" height="100">
+
+                <h2>Past Order <span data-th-text="${orderid}"></span> </h2>
+                <p class="lead">Below is the items that were ordered by you.</p>
+
+                <div th:if="${orderid != null } " class="row row-cols-1 mb-2">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-primary">Your cart</span>
+                        <span class="badge bg-primary rounded-pill">2</span>
+                    </h4>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0">Gold</h6>
+                                <small class="text-muted">
+                                    <span data-th-text="${gold_amount}"></span> oz
+                                </small>
+                            </div>
+                            <span class="text-muted">
+                                <span data-th-text="${currency}"></span>
+                                <span data-th-text="${gold_price}"></span>
+                            </span>
+                        </li>
+
+
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0">Silver</h6>
+                                <small class="text-muted">
+                                    <span data-th-text="${silver_amount}"></span> oz
+                                </small>
+                            </div>
+                            <span class="text-muted">
+                                <span data-th-text="${currency}"></span>
+                                <span data-th-text="${silver_price}"></span>
+                            </span>
+                        </li>
+                    </ul>
+
+                    <form method="GET" action="/goHome">
+                        <div class="row mb-4 px-3">
+                            <small class="font-weight-bold">
+                                <button type="submit" class="btn btn-primary" style="margin-left: 10px;">
+                                    Back to Home
+                                </button>
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </main>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2017–2022 Company Name</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
     </div>
-    <form class="uk-form-stacked">
 
-        <div class="uk-margin">
-            <label class="uk-form-label" for="form-stacked-text">Search by the Order Id</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" id="form-stacked-text" type="text" placeholder="Some text...">
-            </div>
-        </div>
-    
-        <div class="uk-margin">
-            <label class="uk-form-label" for="form-stacked-select">What is done ah?</label>
-            <div class="uk-form-controls">
-                <select class="uk-select" id="form-stacked-select">
-                    <option>Option 01</option>
-                    <option>Option 02</option>
-                </select>
-            </div>
-        </div>
-    
-        <div class="uk-margin">
-            <div class="uk-form-label">Radio</div>
-            <div class="uk-form-controls">
-                <label><input class="uk-radio" type="radio" name="radio1"> Option 01</label><br>
-                <label><input class="uk-radio" type="radio" name="radio1"> Option 02</label>
-            </div>
-        </div>
-    
-    </form>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="form-validation.js"></script>
 </body>
+
 </html>
