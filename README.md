@@ -4,4 +4,6 @@
 
 ![Coverage](.github/badges/jacoco.svg)
 
+![Coverage](https://rowtering.sgp1.digitaloceanspaces.com/coverage/iss-project/jacoco.svg)
+
 [![Deployment to Heroku](https://github.com/rowter4/iss-project/actions/workflows/deploy.yaml/badge.svg)](https://github.com/rowter4/iss-project/actions/workflows/deploy.yaml)
