@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-// import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -22,11 +21,6 @@ import finalProject.ssfpaf.project.service.MetalService;
 import finalProject.ssfpaf.project.service.OrderService;
 import finalProject.ssfpaf.project.service.UserService;
 
-// import sg.edu.nus.iss.vttpproject.repository.UserRepository;
-// import sg.edu.nus.iss.vttpproject.services.UserService;
-
-// import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-// import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @AutoConfigureMockMvc
