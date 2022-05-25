@@ -1,47 +1,36 @@
 package finalProject.ssfpaf.project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-// import static org.junit.jupiter.api.Assertions.fail;
 
-// import java.util.HashMap;
+
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
-// import org.junit.jupiter.api.BeforeAll;
-// import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-// import org.springframework.test.context.ContextConfiguration;
-// import org.springframework.test.context.web.WebAppConfiguration;
+
 import org.springframework.test.web.servlet.MockMvc;
-// import org.springframework.test.web.servlet.MockMvc;
+
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
-// import org.springframework.test.web.servlet.ResultMatcher;
-// import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-// import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-// import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
-// import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-// import org.springframework.web.context.WebApplicationContext;
-// import org.xmlunit.diff.Comparison.Detail;
+
 
 import finalProject.ssfpaf.project.models.Metal;
 import finalProject.ssfpaf.project.models.User;
 import finalProject.ssfpaf.project.repository.DetailOrderRepository;
 import finalProject.ssfpaf.project.repository.UserRepository;
-import finalProject.ssfpaf.project.service.MetalService;
 import finalProject.ssfpaf.project.service.UserException;
 import finalProject.ssfpaf.project.service.UserService;
-// import jakarta.json.Json;
-// import jakarta.json.JsonObject;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -55,9 +44,6 @@ class SsfPafProjectApplicationTests {
 
 	@Autowired
 	private UserService userSvc;
-
-	@Autowired
-	private MetalService metalSvc;
 
 	@Autowired
 	private MockMvc mvc;
@@ -142,24 +128,6 @@ class SsfPafProjectApplicationTests {
 		}
 	}
 
-	// @Test
-	// void ableToAddNewUser()  {
-
-	// 	User user2 = new User();
-	// 	user2.setUsername("rowter12");
-	// 	user2.setEmail("rowter12@gmail.com");
-	// 	user2.setPassword("rowter12");
-
-	// 	userRepo.addUserDetails(user2.username, user2.email, user2.password);
-	// 	assertTrue(true);
-	// 	// try {
-	// 	// 	userSvc.addNewUser(user2);
-	// 	// 	assertTrue(true);
-	// 	// } catch (UserException e) {
-			
-	// 	// 	return;
-	// 	// }
-	// }
 
 	@Test
 	void insertTestUserShouldFail() {
